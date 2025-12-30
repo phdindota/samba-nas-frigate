@@ -2,8 +2,8 @@
 name: Samba NAS
 version: 12.5.0-nas
 slug: sambanas
-description: Expose Home Assistant disc with SMB/CIFS
-url: https://github.com/dianlight/hassio-addons/tree/master/sambanas
+description: Samba NAS optimized for Frigate media on internal drives
+url: https://github.com/phdindota/samba-nas-frigate
 codenotary: lucio.tarantino@gmail.com
 arch:
   - armv7
@@ -36,14 +36,15 @@ options:
     - fe80::/10
     - fc00::/7
   automount: true
-  moredisks: []
+  moredisks:
+    - frigate
   mountoptions:
     - nosuid
     - relatime
     - noexec
   available_disks_log: true
   medialibrary:
-    enable: false
+    enable: true
   veto_files:
     - "._*"
     - ".DS_Store"
