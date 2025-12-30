@@ -15,9 +15,11 @@ This repository contains a Samba NAS solution designed to share storage across d
 - **Home Assistant integration** - Designed as a Home Assistant add-on
 - **Flexible configuration** - Support for multiple shares and user access controls
 - **External disk support** - Mount and share additional storage devices
+- **Internal drive support** - Auto-mount and share internal drives (SSD, HDD, NVMe)
 - **Network discovery** - WSDD (Web Services Dynamic Discovery) support for easy network browsing
 - **Recycle bin** - Optional trash/recycle bin functionality
 - **Access control** - Fine-grained user and share permissions
+- **Frigate integration** - Optimized configuration for Frigate NVR storage
 
 ## Requirements
 
@@ -108,6 +110,15 @@ Detailed documentation, configuration examples, and advanced features can be fou
 - [Full Documentation](sambanas/DOCS.md) - Comprehensive guide and configuration reference
 - [Configuration File](sambanas/config.yaml) - Add-on configuration schema
 - [Changelog](sambanas/CHANGELOG.md) - Version history and changes
+
+### Special Use Cases
+
+- **[Frigate with Internal Drive Setup](FRIGATE_HAOS_INTERNAL_DRIVE.md)** - Complete guide for using Frigate NVR with an internal drive on Home Assistant OS
+  - How to prepare and label an internal drive
+  - Auto-mount configuration with the Samba NAS add-on
+  - Integration with Frigate for video recording storage
+  - Troubleshooting and best practices
+- **[Example Configuration for Frigate](sambanas/haos_samba_nas_frigate_internal_example.yaml)** - Ready-to-use configuration template for Frigate storage
 
 ## License
 

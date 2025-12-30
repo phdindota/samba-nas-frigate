@@ -1,0 +1,206 @@
+# ============================================================================
+# Samba NAS Add-on Configuration Example for Frigate on Internal HAOS Drive
+# ============================================================================
+#
+# This configuration is optimized for using Frigate with an internal drive
+# on Home Assistant OS (HAOS). It demonstrates how to:
+# - Auto-mount an internal drive labeled 'frigate'
+# - Expose the drive via Samba for network access
+# - Enable media library integration for Home Assistant
+# - Configure appropriate permissions for Frigate recording/storage
+#
+# IMPORTANT: This is an EXAMPLE configuration. You MUST:
+# 1. Replace <Your_Password_Here> with a strong, secure password
+# 2. Adjust network settings (allow_hosts) to match your network
+# 3. Ensure Protection Mode is DISABLED in the add-on settings to use
+#    automount and moredisks features
+#
+# For detailed setup instructions, see: FRIGATE_HAOS_INTERNAL_DRIVE.md
+# ============================================================================
+
+# Workgroup name - Change to match your network workgroup if needed
+workgroup: WORKGROUP
+
+# Username for Samba authentication
+# This user will have read/write access to the Frigate share
+username: homeassistant
+
+# Enable local master browser functionality
+local_master: true
+
+# Password for the above username
+# ⚠️ SECURITY: Replace with a strong password! Use Home Assistant secrets if possible
+password: "<Your_Password_Here>"
+
+# Network access control
+# List of allowed IP ranges that can access the Samba shares
+# Adjust these to match your home network configuration
+allow_hosts:
+  - 10.0.0.0/8        # Private network Class A
+  - 172.16.0.0/12     # Private network Class B
+  - 192.168.0.0/16    # Private network Class C (most common home networks)
+  - 169.254.0.0/16    # Link-local addresses
+  - fe80::/10         # IPv6 link-local
+  - fc00::/7          # IPv6 private
+
+# ============================================================================
+# INTERNAL DRIVE AUTO-MOUNT CONFIGURATION
+# ============================================================================
+
+# Enable automatic mounting of labeled disks
+# ⚠️ REQUIRED: Protection Mode MUST be disabled in add-on settings
+automount: true
+
+# List of disk labels to automatically mount
+# This should match the label of your internal drive
+# Example: If your drive is labeled 'frigate', it will be auto-mounted
+moredisks:
+  - frigate
+
+# Mount options for the internal drive
+# - nosuid: Do not allow set-user-ID or set-group-ID bits
+# - relatime: Update inode access times relative to modify/change time
+# - noexec: Do not allow direct execution of binaries (security)
+mountoptions:
+  - nosuid
+  - relatime
+  - noexec
+
+# Enable logging of available disks during startup
+# Useful for troubleshooting and verifying your drive is detected
+available_disks_log: true
+
+# ============================================================================
+# MEDIA LIBRARY INTEGRATION FOR HOME ASSISTANT
+# ============================================================================
+
+# Enable media library feature to make the mounted drive accessible
+# in Home Assistant's Media Browser and storage system
+# Starting from Home Assistant 2023.6.0+, this uses the Supervisor mount feature
+medialibrary:
+  enable: true
+  # ssh_private_key is DEPRECATED and no longer needed for HAOS 2023.6.0+
+
+# ============================================================================
+# FILE FILTERING
+# ============================================================================
+
+# Files to hide and make inaccessible
+# Prevents system files from cluttering the share
+veto_files:
+  - "._*"           # macOS resource forks
+  - ".DS_Store"     # macOS folder settings
+  - Thumbs.db       # Windows thumbnail cache
+  - icon?           # macOS icon files
+  - ".Trashes"      # macOS trash folders
+
+# ============================================================================
+# SAMBA SETTINGS
+# ============================================================================
+
+# Compatibility mode for older SMB clients
+# Leave false unless you have specific compatibility issues
+compatibility_mode: false
+
+# Recycle bin functionality
+# When enabled, deleted files are moved to a recycle bin instead of permanent deletion
+# ⚠️ NOTE: May conflict with veto_files '._*' pattern
+recyle_bin_enabled: false
+
+# Web Services Dynamic Discovery (WSDD) for network browsing
+# wsdd: Uses the standard WSDD implementation
+# wsdd2: Alternative implementation for Windows 11+ compatibility issues
+wsdd: true
+wsdd2: false
+
+# MQTT NextGen entities
+# Set to true if you want to expose disk/share status via MQTT
+mqtt_nexgen_entities: false
+
+# Auto-discovery settings for MQTT
+autodiscovery: {}
+
+# ============================================================================
+# ADVANCED USER AND ACCESS CONTROL
+# ============================================================================
+
+# Additional users (beyond the main username)
+# Useful if you need multiple users with different access levels
+# Example:
+# other_users:
+#   - username: frigate_readonly
+#     password: "<Another_Password>"
+other_users: []
+
+# Access Control List (ACL) for fine-grained share permissions
+# Use this to control access to specific shares
+# 
+# The auto-mounted 'frigate' disk will be shared automatically with:
+# - Share name matching the disk label (e.g., \\server\frigate)
+# - Full read/write access for the main user
+# - Time Machine compatibility enabled by default for external disks
+#
+# Example advanced ACL configuration:
+# acl:
+#   - share: frigate
+#     disabled: false        # Set to true to disable this share
+#     users:                 # Users with full access
+#       - homeassistant
+#     ro_users:              # Users with read-only access
+#       - frigate_readonly
+#     timemachine: false     # Time Machine backup support
+#     usage:                 # How HA should treat this storage
+#       - media              # Options: media, backup, share
+acl: []
+
+# Network interfaces to bind to
+# Leave empty to auto-detect and bind to all Home Assistant network interfaces
+interfaces: []
+
+# ============================================================================
+# NOTES FOR FRIGATE INTEGRATION
+# ============================================================================
+#
+# After configuring this add-on:
+#
+# 1. The internal drive labeled 'frigate' will be mounted and shared as:
+#    - SMB share: \\<HAOS_IP>\frigate
+#    - Local path in HAOS: /mnt/data/supervisor/mounts/<mount_name>
+#
+# 2. Add the share as network storage in Home Assistant:
+#    Settings → System → Storage → Add Network Storage
+#    - Type: CIFS (Samba)
+#    - Server: Core (or your HAOS hostname/IP)
+#    - Share: frigate
+#    - Username: homeassistant (or as configured above)
+#    - Password: (as configured above)
+#    - Media directory path: (leave default, e.g., frigate_media)
+#
+# 3. Configure Frigate to use the mounted storage:
+#    In your Frigate configuration.yaml, set:
+#    
+#    ffmpeg:
+#      hwaccel_args: preset-rpi-64-h264  # or appropriate for your hardware
+#    
+#    record:
+#      enabled: true
+#      retain:
+#        days: 7
+#        mode: motion
+#      events:
+#        retain:
+#          default: 30
+#          mode: active_objects
+#    
+#    snapshots:
+#      enabled: true
+#      retain:
+#        default: 30
+#    
+# 4. In Home Assistant, mount the network share and configure Frigate to use it:
+#    The path will typically be: /media/frigate_media
+#    Update Frigate's config if needed to point recordings there.
+#
+# For complete step-by-step instructions, see: FRIGATE_HAOS_INTERNAL_DRIVE.md
+#
+# ============================================================================
