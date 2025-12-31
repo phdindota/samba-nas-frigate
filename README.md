@@ -1,10 +1,12 @@
 # Samba NAS for Frigate - Home Assistant Add-on Repository
 
-A Home Assistant add-on repository providing a Samba NAS solution optimized for Frigate NVR storage on internal drives. This add-on exposes storage over SMB/CIFS, making it accessible from Windows, macOS, and Linux devices.
+A Home Assistant add-on repository providing a Samba NAS solution optimized for Frigate NVR storage on internal drives or NAS-mounted storage. This add-on exposes storage over SMB/CIFS, making it accessible from Windows, macOS, and Linux devices.
 
 ## Overview
 
-This is a **Home Assistant add-on repository** that contains the Samba NAS add-on, specifically configured to work seamlessly with Frigate NVR on Home Assistant OS (HAOS). The add-on provides automated mounting and sharing of internal drives for efficient storage of Frigate recordings, clips, and snapshots.
+This is a **Home Assistant add-on repository** that contains the Samba NAS add-on, specifically configured to work seamlessly with Frigate NVR on Home Assistant OS (HAOS). The add-on provides automated mounting and sharing of internal drives or NAS-mounted storage for efficient storage of Frigate recordings, clips, and snapshots.
+
+The add-on also handles HAOS mount-name quirks by automatically creating a `/media/frigate → /media/FRIGATE` symlink when safe, ensuring Frigate can consistently access storage regardless of whether HAOS creates uppercase or lowercase mount names.
 
 ## Features
 
@@ -12,7 +14,9 @@ This is a **Home Assistant add-on repository** that contains the Samba NAS add-o
 - **SMB/CIFS protocol** - Industry-standard network file sharing
 - **Home Assistant integration** - Designed as a Home Assistant add-on
 - **Flexible configuration** - Support for multiple shares and user access controls
-- **Auto-mount internal drives** - Automatically mount and share labeled internal drives (SSD, HDD, NVMe)
+- **Flexible storage options** - Supports both internal drives (SSD, HDD, NVMe) and NAS-mounted storage approaches
+- **Auto-mount internal drives** - Automatically mount and share labeled internal drives
+- **Automatic /media/frigate handling** - Auto-creates `/media/frigate → /media/FRIGATE` symlink when safe to handle HAOS mount-name quirks
 - **External disk support** - Mount and share additional storage devices
 - **Network discovery** - WSDD (Web Services Dynamic Discovery) support for easy network browsing
 - **Recycle bin** - Optional trash/recycle bin functionality
@@ -213,6 +217,10 @@ snapshots:
   enabled: true
   retain:
     default: 30
+
+# If needed, explicitly set the base directory (optional in most cases):
+# media:
+#   base_dir: /media/frigate
 ```
 
 Frigate will automatically use the `/media/<mount_name>` path for recordings, clips, and snapshots.
