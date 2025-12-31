@@ -58,7 +58,9 @@ After adding the repository:
 1. Find **Samba NAS** in the add-on store (it may be in the "Community Add-ons" section)
 2. Click on the add-on
 3. Click **INSTALL**
-4. Wait for the installation to complete
+4. Wait for the installation to complete (the add-on will be built locally from source, which may take a few minutes)
+
+**Note:** This add-on builds locally on your Home Assistant system from the included Dockerfile. The first installation may take 5-10 minutes depending on your hardware.
 
 ## Configuration
 
