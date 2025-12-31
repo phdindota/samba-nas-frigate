@@ -253,6 +253,31 @@ If you see errors, double-check:
 - Protection Mode is disabled
 - The drive is properly formatted and connected
 
+### 2.5 Automatic Symlink Creation
+
+**New Feature:** If you label your drive as `FRIGATE` (uppercase) instead of `frigate` (lowercase), the add-on will automatically:
+
+1. Create a symlink from `/media/frigate` → `/media/FRIGATE` when:
+   - `/media/FRIGATE` exists and is a directory
+   - `/media/frigate` does not already exist (to prevent data loss)
+
+2. Create the standard Frigate directory structure:
+   - `/media/FRIGATE/recordings`
+   - `/media/FRIGATE/clips`
+   - `/media/FRIGATE/snapshots`
+
+This automatic symlink creation resolves the common case where HAOS mounts a disk labeled `FRIGATE` as `/media/FRIGATE`, but Frigate and various guides reference `/media/frigate`. The add-on logs will show:
+
+```
+[INFO] Creating symlink: /media/frigate -> /media/FRIGATE
+[INFO] Symlink created successfully
+[INFO] Created directory: /media/FRIGATE/recordings
+[INFO] Created directory: /media/FRIGATE/clips
+[INFO] Created directory: /media/FRIGATE/snapshots
+```
+
+**Note:** The add-on will never delete or overwrite an existing `/media/frigate` to prevent accidental data loss.
+
 ---
 
 ## Step 3: Add Network Storage in Home Assistant
