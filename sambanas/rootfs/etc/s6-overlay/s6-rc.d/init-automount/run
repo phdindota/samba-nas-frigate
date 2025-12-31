@@ -310,4 +310,32 @@ elif bashio::config.has_value 'moredisks' || bashio::config.true 'automount'; th
      IFS=$OIFS
 
      echo "$path" >/tmp/mountpath
+
+     # ==============================================================================
+     # Auto-create symlink from /media/frigate to /media/FRIGATE
+     # ==============================================================================
+     # This handles the common case in HAOS where a disk/partition labeled FRIGATE
+     # gets mounted as /media/FRIGATE (uppercase), but Frigate and various guides
+     # reference /media/frigate (lowercase). Creating a symlink avoids manual SSH
+     # steps and provides a consistent path for both Samba and Frigate.
+     # ==============================================================================
+     
+     if [ -d "/media/FRIGATE" ] && [ ! -e "/media/frigate" ]; then
+          bashio::log.info "Creating symlink: /media/frigate -> /media/FRIGATE"
+          ln -s /media/FRIGATE /media/frigate && \
+               bashio::log.info "Symlink created successfully" || \
+               bashio::log.warning "Failed to create symlink /media/frigate"
+          
+          # Create Frigate standard directory structure if it doesn't exist
+          for subdir in recordings clips snapshots; do
+               if [ ! -d "/media/FRIGATE/$subdir" ]; then
+                    mkdir -p "/media/FRIGATE/$subdir" && \
+                         chmod a+rwx "/media/FRIGATE/$subdir" && \
+                         bashio::log.info "Created directory: /media/FRIGATE/$subdir" || \
+                         bashio::log.warning "Failed to create directory /media/FRIGATE/$subdir"
+               fi
+          done
+     elif [ -e "/media/frigate" ]; then
+          bashio::log.debug "Skipping symlink creation: /media/frigate already exists"
+     fi
 fi

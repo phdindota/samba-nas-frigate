@@ -217,6 +217,20 @@ snapshots:
 
 Frigate will automatically use the `/media/<mount_name>` path for recordings, clips, and snapshots.
 
+### Automatic FRIGATE/frigate Symlink
+
+**Important:** If you have a disk or partition labeled `FRIGATE` (uppercase) that gets mounted as `/media/FRIGATE`, this add-on will automatically create a symlink from `/media/frigate` (lowercase) to `/media/FRIGATE` when:
+
+- `/media/FRIGATE` exists and is a directory
+- `/media/frigate` does not already exist (to prevent data loss)
+
+This symlink creation happens automatically during add-on startup, ensuring both Samba and Frigate can access the storage using either `/media/FRIGATE` or `/media/frigate` paths. The add-on will also automatically create the standard Frigate directory structure:
+- `/media/FRIGATE/recordings`
+- `/media/FRIGATE/clips`
+- `/media/FRIGATE/snapshots`
+
+**Note:** The add-on will never delete or overwrite an existing `/media/frigate` directory or file to prevent accidental data loss.
+
 For complete step-by-step instructions, see [FRIGATE_HAOS_INTERNAL_DRIVE.md](FRIGATE_HAOS_INTERNAL_DRIVE.md).
 
 ## Maintenance
