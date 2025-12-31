@@ -1,8 +1,8 @@
 ---
-name: Samba NAS
+name: Samba NAS for Frigate
 version: 12.5.0-nas
 slug: sambanas
-description: Samba NAS optimized for Frigate media on internal drives
+description: Samba NAS add-on optimized for Frigate: stores recordings on internal or NAS-mounted storage in Home Assistant OS, with automatic /media/frigate handling
 url: https://github.com/phdindota/samba-nas-frigate
 codenotary: lucio.tarantino@gmail.com
 arch:

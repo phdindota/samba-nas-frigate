@@ -40,9 +40,23 @@ We encourage users interested in the latest features and improvements to keep an
 
 ## About
 
-This Add-on allows you to enable file sharing across different operating systems over a network.
-It lets you access your config files with Windows and macOS devices.
-Also you can specify disk label to mount at boot and share.
+**Samba NAS for Frigate** is a Home Assistant add-on optimized for storing Frigate NVR recordings on internal drives or NAS-mounted storage in Home Assistant OS (HAOS). This add-on provides SMB/CIFS file sharing that works seamlessly with Frigate's storage requirements.
+
+### Key Features for Frigate Users
+
+- **Flexible Storage Options**: Supports both internal drives (SSD, HDD, NVMe) and NAS-mounted storage approaches
+- **Automatic /media/frigate Handling**: When a disk labeled `FRIGATE` (uppercase) is mounted at `/media/FRIGATE`, the add-on automatically creates a symlink `/media/frigate → /media/FRIGATE` for compatibility. This symlink is **only created when safe** - the add-on will never overwrite an existing `/media/frigate` directory or file.
+- **Frigate Integration**: Pre-configured to work with Frigate's `media.base_dir` configuration, supporting paths like `/media/frigate` or `/media/frigate_media`
+- **Auto-mount Internal Drives**: Automatically mount and share labeled internal drives
+- **Cross-platform Access**: Access your Frigate recordings from Windows, macOS, and Linux devices
+
+### How It Works
+
+1. **Internal Drive Approach**: Label your internal drive (e.g., `frigate`), and the add-on will auto-mount and share it via SMB
+2. **NAS-Mounted Approach**: Add a CIFS/SMB network storage mount in Home Assistant, and the add-on helps make it accessible to Frigate
+3. **HAOS Mount Name Quirks**: HAOS sometimes creates uppercase mount names (e.g., `/media/FRIGATE`). This add-on automatically handles this by creating a lowercase symlink when safe, ensuring Frigate can access the storage consistently.
+
+For detailed setup instructions, see the configuration examples and documentation below.
 
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
