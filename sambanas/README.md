@@ -1,41 +1,8 @@
-# Home Assistant Add-on: Samba NAS share
+# Home Assistant Add-on: Samba NAS for Frigate
 
-Share your disks over the network using Windows file sharing.
+Frigate-optimized Samba NAS for Home Assistant OS - store recordings on internal or NAS-mounted storage with automatic /media/frigate handling.
 
 ![Supports aarch64 Architecture][aarch64-shield] ![Supports amd64 Architecture][amd64-shield] ![Supports armv7 Architecture][armv7-shield]
-
-<!--
-[![Stargazers repo roster for @dianlight/hassio-addons](https://raw.githubusercontent.com/dianlight/hassio-addons/master/.github/stars2.svg)](https://github.com/dianlight/hassio-addons/stargazers)
-
-![downloads evolution](https://raw.githubusercontent.com/dianlight/hassio-addons/master/sambanas/stats.png)
--->
-
-## Important Notice Regarding SambaNas Addon Development
-
-**SambaNas Addon is Now in Maintenance Mode**
-
-This notice is to inform our users that the **SambaNas addon will now transition into maintenance mode.** This means that **no future features will be implemented** for this version of the addon. Our development efforts will be focused solely on providing **critical bug fixes** to ensure its continued stability for existing users.
-
-**Introducing SambaNas2: The Future of Samba Integration**
-
-We are excited to announce **SambaNas2**, the successor to the original SambaNas addon! SambaNas2 represents a **complete rewrite from the ground up, developed in Go with a brand new core.** This will bring significant improvements in performance, stability, and future extensibility.
-
-**Current Status and Upcoming Beta Release**
-
-SambaNas2 is currently in an **Alpha stage** of development. We are pleased to announce that a **public Beta version will be released in the coming weeks** and will be available through our beta channel.
-
-We encourage users interested in the latest features and improvements to keep an eye out for the SambaNas2 beta release. Thank you for your continued support.
-
-## Installations
-
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json&query=%24.1a32f091_sambanas.total&label=SambaNas%20Installations&link=https%3A%2F%2Faddonstats.poeschl.xyz%2F%23)
-![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json&query=%24.c9a35110_sambanas.total&label=SambaNas%20β%20Installations&link=https%3A%2F%2Faddonstats.poeschl.xyz%2F%23)
-
-## Help Me!
-
-[![](https://img.shields.io/github/sponsors/dianlight?label=Sponsor&logo=GitHub)](https://github.com/sponsors/dianlight)
-
-<a href="https://www.buymeacoffee.com/ypKZ2I0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=ypKZ2I0&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
 
 
 ## About
@@ -46,26 +13,26 @@ We encourage users interested in the latest features and improvements to keep an
 
 - **Flexible Storage Options**: Supports both internal drives (SSD, HDD, NVMe) and NAS-mounted storage approaches
 - **Automatic /media/frigate Handling**: When a disk labeled `FRIGATE` (uppercase) is mounted at `/media/FRIGATE`, the add-on automatically creates a symlink `/media/frigate → /media/FRIGATE` for compatibility. This symlink is **only created when safe** - the add-on will never overwrite an existing `/media/frigate` directory or file.
-- **Frigate Integration**: Pre-configured to work with Frigate's `media.base_dir` configuration, supporting paths like `/media/frigate` or `/media/frigate_media`
-- **Auto-mount Internal Drives**: Automatically mount and share labeled internal drives
-- **Cross-platform Access**: Access your Frigate recordings from Windows, macOS, and Linux devices
+- **Frigate Integration**: Pre-configured to work with Frigate's storage requirements, supporting paths like `/media/frigate` or `/media/frigate_media`
+- **Auto-mount Internal Drives**: Automatically mount and share labeled internal drives with the `moredisks` configuration option
+- **Cross-platform Access**: Access your Frigate recordings from Windows, macOS, and Linux devices over SMB/CIFS
+- **Media Library Integration**: Optional integration with Home Assistant's media system for easy access to recordings
 
 ### How It Works
 
-1. **Internal Drive Approach**: Label your internal drive (e.g., `frigate`), and the add-on will auto-mount and share it via SMB
-2. **NAS-Mounted Approach**: Add a CIFS/SMB network storage mount in Home Assistant, and the add-on helps make it accessible to Frigate
-3. **HAOS Mount Name Quirks**: HAOS sometimes creates uppercase mount names (e.g., `/media/FRIGATE`). This add-on automatically handles this by creating a lowercase symlink when safe, ensuring Frigate can access the storage consistently.
+This add-on can be used in two primary ways for Frigate storage:
 
-For detailed setup instructions, see the configuration examples and documentation below.
+1. **Internal Drive Approach**: Format and label an internal drive (e.g., as `frigate`), configure the add-on to auto-mount it, then add it as network storage in Home Assistant for Frigate to use
+2. **NAS-Mounted Approach**: Add a CIFS/SMB network storage mount in Home Assistant pointing to external NAS storage, and configure Frigate to use that mounted path
+
+The add-on handles HAOS mount-name quirks by automatically creating a `/media/frigate → /media/FRIGATE` symlink when safe, ensuring Frigate can consistently access storage regardless of whether HAOS creates uppercase or lowercase mount names.
+
+For detailed setup instructions, see the repository's [FRIGATE_HAOS_INTERNAL_DRIVE.md](https://github.com/phdindota/samba-nas-frigate/blob/master/FRIGATE_HAOS_INTERNAL_DRIVE.md) guide.
 
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
-[discord]: https://discord.gg/c5DvZ4e
-[forum]: https://community.home-assistant.io
-[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
-[issue]: https://github.com/dianlight/hassio-addons/issues
-[reddit]: https://reddit.com/r/homeassistant
-[repository]: https://github.com/dianlight/hassio-addons
+[issue]: https://github.com/phdindota/samba-nas-frigate/issues
+[repository]: https://github.com/phdindota/samba-nas-frigate
