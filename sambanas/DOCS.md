@@ -36,6 +36,40 @@ Follow these steps to get the add-on installed on your system:
 1. In the configuration section, set a username and password.
 2. Review the enabled shares. Disable any you do not plan to use. Shares can be re-enabled later if needed.
 
+## Frigate Configuration Example
+
+After setting up the add-on and mounting your storage, configure Frigate to use the mounted path:
+
+```yaml
+# Example Frigate configuration using internal drive storage
+mqtt:
+  enabled: true
+
+# Point Frigate to the mounted storage path
+# This assumes you've added network storage that mounts at /media/frigate or /media/frigate_media
+# The add-on auto-creates a symlink from /media/frigate to /media/FRIGATE when safe
+record:
+  enabled: true
+  retain:
+    days: 7
+    mode: motion
+
+snapshots:
+  enabled: true
+  retain:
+    default: 30
+
+# If needed, explicitly set the base directory (optional in most cases):
+# media:
+#   base_dir: /media/frigate
+```
+
+**Important Notes:**
+- The add-on automatically creates `/media/frigate → /media/FRIGATE` symlink when a disk labeled `FRIGATE` (uppercase) is mounted, **only if** `/media/frigate` doesn't already exist
+- This symlink is never created if `/media/frigate` already exists, preventing any data loss
+- Frigate can use either `/media/frigate`, `/media/FRIGATE`, or custom mount paths like `/media/frigate_media`
+- For complete setup instructions with internal drives, see the repository's [FRIGATE_HAOS_INTERNAL_DRIVE.md](https://github.com/phdindota/samba-nas-frigate/blob/master/FRIGATE_HAOS_INTERNAL_DRIVE.md) guide
+
 ## Connection
 
 If you are on Windows you use `\\<IP_ADDRESS>\`, if you are on MacOS you use `smb://<IP_ADDRESS>` to connect to the shares.
