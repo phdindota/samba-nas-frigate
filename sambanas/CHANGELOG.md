@@ -1,26 +1,18 @@
 # Changelog
 
-## 12.5.0-nas [ Maintenance Mode ]
+## 12.5.0-nas [ Samba NAS for Frigate Fork ]
 
 ### ✨ Features 
 
-### 🚨 Important Notice Regarding SambaNas Addon Development
+This version represents the **Samba NAS for Frigate** fork - a dedicated add-on optimized for Frigate NVR storage on Home Assistant OS.
 
-**SambaNas Addon is Now in Maintenance Mode**
+**Key Features:**
+- Frigate-optimized configuration with automatic `/media/frigate` handling
+- Supports both internal drives and NAS-mounted storage for Frigate recordings
+- Automatic symlink creation (`/media/frigate → /media/FRIGATE`) when safe
+- Pre-configured defaults for Frigate media storage use cases
 
-This notice is to inform our users that the **SambaNas addon will now transition into maintenance mode.** This means that **no future features will be implemented** for this version of the addon. Our development efforts will be focused solely on providing **critical bug fixes** to ensure its continued stability for existing users.
-
-**Introducing SambaNas2: The Future of Samba Integration**
-
-We are excited to announce **SambaNas2**, the successor to the original SambaNas addon! SambaNas2 represents a **complete rewrite from the ground up, developed in Go with a brand new core.** This will bring significant improvements in performance, stability, and future extensibility.
-
-**Current Status and Upcoming Beta Release**
-
-SambaNas2 is currently in an **Alpha stage** of development. We are pleased to announce that a **public Beta version will be released in the coming weeks** and will be available through our beta channel.
-
-We encourage users interested in the latest features and improvements to keep an eye out for the SambaNas2 beta release. Thank you for your continued support.
-
-[Add our Hass.io BETA add-ons repository][beta-repository] to your Hass.io instance.
+For detailed setup instructions, see the [FRIGATE_HAOS_INTERNAL_DRIVE.md](https://github.com/phdindota/samba-nas-frigate/blob/master/FRIGATE_HAOS_INTERNAL_DRIVE.md) guide.
 
 ###  🩹 BugFix
 - Fix issue [#283](https://github.com/dianlight/hassio-addons/issues/283)
