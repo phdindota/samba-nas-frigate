@@ -1,27 +1,10 @@
-# Home Assistant Add-on: Samba NAS share
+# Home Assistant Add-on: Samba NAS for Frigate
 
-# 📰 Important Notice Regarding SambaNas Addon Development
-
-**SambaNas Addon is Now in Maintenance Mode**
-
-This notice is to inform our users that the **SambaNas addon will now transition into maintenance mode.** This means that **no future features will be implemented** for this version of the addon. Our development efforts will be focused solely on providing **critical bug fixes** to ensure its continued stability for existing users.
-
-**Introducing SambaNas2: The Future of Samba Integration**
-
-We are excited to announce **SambaNas2**, the successor to the original SambaNas addon! SambaNas2 represents a **complete rewrite from the ground up, developed in Go with a brand new core.** This will bring significant improvements in performance, stability, and future extensibility.
-
-**Current Status and Upcoming Beta Release**
-
-SambaNas2 is currently in an **Alpha stage** of development. We are pleased to announce that a **public Beta version will be released in the coming weeks** and will be available through our beta channel.
-
-We encourage users interested in the latest features and improvements to keep an eye out for the SambaNas2 beta release. Thank you for your continued support.
-
+Detailed configuration documentation for the Samba NAS for Frigate add-on.
 
 ## 🚨 Important Note 🚨
 
-This addon has been designed, built and tested to work with HAOS (Homeassistant Operating System). The use in other types of installations is not recommended and useless as other solutions given by the host can be used.
-
-### Using it on a different operating system leads to the error at startup. I apologize to all the advanced users who are using it on different OSes but I manage the addon in my spare time and instead of doing something useful lately I'm only replying to people who don't read the documentation. "This is the meaning of life"
+This add-on has been designed, built, and tested to work with **Home Assistant OS (HAOS)** only. Use on other types of installations (Container, Supervised, Core) is not recommended, as those installations can use native host solutions for Samba file sharing.
 
 ## Installation
 
@@ -429,9 +412,6 @@ Defaults to `false`.
 
 ## Support
 
-### Do you like the Addon?
-<a href="https://www.buymeacoffee.com/ypKZ2I0"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=ypKZ2I0&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
-
 ### Common problems
 
 - **_The disk does not mount_** : check that the Label of the partition of the disk you want to mount is case-sensitive with the label indicated in the `moredisk` parameter.
@@ -440,6 +420,5 @@ Defaults to `false`.
 
 In case you've found a bug, please [open an issue on our GitHub][issue].
 
-[issue]: https://github.com/dianlight/hassio-addons/issues
-[reddit]: https://reddit.com/r/homeassistant
-[repository]: https://github.com/dianlight/hassio-addons
+[issue]: https://github.com/phdindota/samba-nas-frigate/issues
+[repository]: https://github.com/phdindota/samba-nas-frigate

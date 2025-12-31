@@ -241,18 +241,7 @@ This symlink creation happens automatically during add-on startup, ensuring both
 
 For complete step-by-step instructions, see [FRIGATE_HAOS_INTERNAL_DRIVE.md](FRIGATE_HAOS_INTERNAL_DRIVE.md).
 
-## Maintenance
-
-### Maintenance Mode Notice
-
-The Samba NAS add-on is currently in **maintenance mode**. This means:
-- No new features will be implemented
-- Critical bug fixes will continue to be provided
-- Development focus has shifted to SambaNas2 (a complete rewrite in Go)
-
-For more information about the future of this project, see the [sambanas/README.md](sambanas/README.md) file.
-
-### Updating
+## Updating
 
 The add-on can be updated through the Home Assistant Supervisor interface when updates become available.
 
