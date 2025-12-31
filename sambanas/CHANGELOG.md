@@ -15,6 +15,7 @@ This version represents the **Samba NAS for Frigate** fork - a dedicated add-on 
 For detailed setup instructions, see the [FRIGATE_HAOS_INTERNAL_DRIVE.md](https://github.com/phdindota/samba-nas-frigate/blob/master/FRIGATE_HAOS_INTERNAL_DRIVE.md) guide.
 
 ###  🩹 BugFix
+- **Fix Docker image installation issue**: Removed pre-built image reference to enable local builds. The add-on now builds locally from the Dockerfile, resolving the "manifest unknown" error when installing/updating from Home Assistant Supervisor.
 - Fix issue [#283](https://github.com/dianlight/hassio-addons/issues/283)
 - Missing Apparmor's permissions [#354](https://github.com/dianlight/hassio-addons/issues/354)
 
